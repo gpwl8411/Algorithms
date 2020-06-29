@@ -22,7 +22,7 @@ public class DiskController {
 					minHeap.add(new Task(jobs[i][0], jobs[i][1]));
 				}
 			}
-			if ((cnt == 0 || time >= finishT) && !minHeap.isEmpty()) {
+			if ((time >= finishT) && !minHeap.isEmpty()) {
 				Task task = minHeap.poll();
 				answer += time - task.start + task.executeT;
 				finishT = time + task.executeT;
