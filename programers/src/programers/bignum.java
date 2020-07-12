@@ -8,19 +8,21 @@ public class BigNum{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String answer = "";
-		Integer[] numbers = {3,30,34,5,9};
+		int[] numbers = {3,30,34,5,9};
+		String[] strNum = new String[numbers.length];
+		for(int i=0;i<numbers.length;i++) {
+			strNum[i]=String.valueOf(numbers[i]);
+		}
 		
-		Arrays.sort(numbers, new Comparator<Integer>() {
+		Arrays.sort(strNum, new Comparator<String>() {
 
 			@Override
-			public int compare(Integer o1, Integer o2) {
-				String s1 = String.valueOf(o1);
-				String s2 = String.valueOf(o2);
+			public int compare(String s1, String s2) {
 				return (s2+s1).compareTo(s1+s2);
 			}
 			
 		});
-		for(int i : numbers) {
+		for(String i : strNum) {
 			answer+=i;
 		}
 		if(answer.charAt(0)=='0') {

@@ -10,10 +10,7 @@ public class SearchPrime {
 	public static void main(String[] args) {
 		String numbers = "131";		
 		int[] intNumbers = Stream.of(numbers.split("")).mapToInt(Integer::parseInt).toArray();
-		
-//		for (int i = 1; i <= numbers.length(); i++) {
-//				permutation(intNumbers,0,numbers.length(),i);
-//		}
+
 		permutation("",numbers,ansSet);
 		System.out.println(ansSet.size());
 
