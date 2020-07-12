@@ -11,13 +11,25 @@ public class SearchPrime {
 		String numbers = "131";		
 		int[] intNumbers = Stream.of(numbers.split("")).mapToInt(Integer::parseInt).toArray();
 		
-		for (int i = 1; i <= numbers.length(); i++) {
-				permutation(intNumbers,0,numbers.length(),i);
-		}
+//		for (int i = 1; i <= numbers.length(); i++) {
+//				permutation(intNumbers,0,numbers.length(),i);
+//		}
+		permutation("",numbers,ansSet);
 		System.out.println(ansSet.size());
 
 	}
-		
+	public static void permutation(String prefix, String str, HashSet<Integer> set) {
+        int n = str.length();
+        if(!prefix.equals("")) {
+        	System.out.println("prefix = "+prefix);
+        	set.add(Integer.valueOf(prefix));
+        }
+        for (int i = 0; i < n; i++){
+        	permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n), set);
+        	System.out.println(prefix + str.charAt(i)+","+ str.substring(0, i) + str.substring(i+1, n));
+        }
+
+    }
 
 	static void permutation(int[] arr, int depth, int n, int r) {
 		if (depth == r) {
