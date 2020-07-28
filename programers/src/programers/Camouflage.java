@@ -5,13 +5,12 @@ import java.util.HashMap;
 
 public class Camouflage {
 
+//	static int answer = 0;
+//	static HashMap<String, ArrayList<String>> map;
 	public static void main(String[] args) {
-		String[][] clothes = { { "yellow_hat", "headgear" }, { "blue_sunglasses", "eyewear" },
-				{ "green_turban", "headgear" } };
-
-		HashMap<String, ArrayList<String>> map = new HashMap<>();
-		int answer = 0;
-
+		String[][] clothes = { { "crow_mask", "face"}, {"blue_sunglasses", "face"}, {"smoky_makeup", "face" } };
+		int answer=1;
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
 		for (int i = 0; i < clothes.length; i++) {
 			ArrayList<String> list;
 			if (map.containsKey(clothes[i][1])) {
@@ -22,43 +21,57 @@ public class Camouflage {
 			}
 			list.add(clothes[i][0]);
 			map.put(clothes[i][1], list);
-			answer++;
 		}
-//		int typeCnt1 = 1;
-//		int typeCnt2 = 1;
-//		for (String key : map.keySet()) {
-//			if(map.size()==1){
-//				typeCnt1 = 0;
-//				typeCnt2 = 0;
-//				break;
+        for(String key : map.keySet()){
+            answer *= (map.get(key).size()+1);
+        }
+        System.out.println(answer-1);
+		/**
+		 * 아래에는 시간초과 난 코드
+		 */
+//		map = new HashMap<>();
+//		for (int i = 0; i < clothes.length; i++) {
+//			ArrayList<String> list;
+//			if (map.containsKey(clothes[i][1])) {
+//				list = map.get(clothes[i][1]);
+//
+//			} else {
+//				list = new ArrayList<>();
 //			}
-//			for(String key2 : map.keySet()){
-//				for(int i=1;i<=map.size();i++){
-//					
-//				}
-//				if(!key.equals(key2))
-//				typeCnt1 += map.get(key).size()*map.get(key2).size();
-//			}
-//			if(map.size()==2) typeCnt2=0;
-//			typeCnt2 *= map.get(key).size();
+//			list.add(clothes[i][0]);
+//			map.put(clothes[i][1], list);
 //		}
-		System.out.println(answer);
-
+//	        boolean[] visited = new boolean[map.keySet().size()];
+//	        String[] keys = new String[map.keySet().size()];
+//	        int index=0;
+//	        for(String key : map.keySet()) {
+//	        	keys[index++] = key;
+//	        }
+//	        for (int i = 1; i <= map.keySet().size(); i++) {
+//	            combination(keys, visited, 0, map.keySet().size(), i);
+//	        }
+//
+//		System.out.println(answer);
+//
+//	}
+//	static void combination(String[] keys, boolean[] visited, int start, int n, int r) {
+//	    if(r == 0) {
+//	    	answer++;
+//	        return;
+//	    } 
+//	    for(int i=start; i<n; i++) {
+//	        visited[i] = true;
+//	        String key = keys[i];
+//	        for(int j=0;j<map.get(key).size();j++) {
+//	        	combination(keys, visited, i + 1, n, r - 1);	        	
+//	        }
+//	        	
+//	        visited[i] = false;
+//	    }
+		
+		
 	}
-//	private static int combination(ArrayList<String> comArr, int n, int r, int index,String target) {
-//        if(r==0){
-//            for(String i : comArr){
-//                System.out.print(i+" ");
-//            }
-//            System.out.println();
-//            return;
-//        }
-//        if(target == n)return;
-//         
-//        comArr.add(index, target); 
-//        combination(comArr, n, r-1, index+1, target+1);//�̴°��
-//        combination(comArr, n, r, index, target+1);//�Ȼ̴°��
-//         
-//    }
+	
+
 
 }
