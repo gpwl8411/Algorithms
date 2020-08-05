@@ -76,8 +76,7 @@ class Song implements Comparable<Song>{
                 return -1;
             }
         }
-        return 1; // 이미 this.first가 더 큰 것이 됐으므로, 1로 해준다. -1로
-        // -1로 하면 결과가 이상하게 출력됨.
+        return 1; 
     }
 	
 }
