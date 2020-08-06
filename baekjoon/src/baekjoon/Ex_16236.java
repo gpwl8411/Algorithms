@@ -3,7 +3,9 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -12,101 +14,103 @@ public class Ex_16236 {
 	static int[][] map;
 	static boolean flag = true;
 	static boolean[][] visited;
-	static int size=2;
 	static int cnt;
-	static int eat;
-	
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
 		map = new int[n][n];
 		visited = new boolean[n][n];
-
-		Baby b = null;
+		Shark shark = null;
 		for (int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < n; j++) {
 				map[i][j] = Integer.parseInt(st.nextToken());
-//				if (map[i][j] == 9) {
-//					b = new Baby(i, j, 2);
-//				}
+				if(map[i][j]==9) {
+					shark = new Shark(i,j,0,2,0);
+					map[i][j]=0;
+				}
 			}
 		}
-		while (flag) {
-			detect();
-		}
+		detect(shark);
 		System.out.println(cnt);
-
+		
 	}
-	//1.¹°°í±â ¼ø¼­´ë·Î listÀúÀå
-	
-	//2.¹°°í±â ÀÛÀº°ÅºÎÅÍ °Å¸® °¡±î¿î°Å À§ÂÊÀÎ°Å ¿ŞÂÊÀÎ°Å ¼øÀ¸·Î sort
-	//-°Å¸® È®ÀÎÇÏ´Â ÇÔ¼ö 
-	//sort¸¦ ÇÒ°æ¿ì ¹°°í±â À§Ä¡°¡ ¹Ù²î¸é °è¼Ó ¹Ù²î¾î¾ßÇÔ right?
-	
-	//3.»©¸é¼­ È®ÀÎ
-	//-¹°°í±â »çÀÌÁî À§Ä¡ ÀúÀåÇØ¾ßÇÔ!
+	static void detect(Shark s) {
 
-
-	// ¹°°í±â È®ÀÎ
-	public static void detect() {
-		int[] dx = { 1, 0, -1, 0 };
-		int[] dy = { 0, -1, 0, 1 };
-		Queue<Integer> qx = new LinkedList<Integer>();
-		Queue<Integer> qy = new LinkedList<Integer>();
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if (map[i][j] == 9)
-					qx.offer(i);
-					qy.offer(j);
-			}
+		Queue<Shark> q = new LinkedList<>();//íƒìƒ‰ í
+		PriorityQueue<Shark> preQ = new PriorityQueue<>();//ë¨¹ì„ ìˆ˜ ìˆëŠ” ìƒì–´ í
+		int[] dx = {-1,0,1,0};
+		int[] dy = {0,-1,0,1};
+		q.offer(s);
+		for(boolean a[] : visited) {
+			Arrays.fill(a, false);
 		}
-		while (!qx.isEmpty()) {
-			int tmpx = qx.poll();
-			int tmpy = qy.poll();
-			
-			for (int i = 0; i < 4; i++) {
-				int sx = tmpx + dx[i];
-				int sy = tmpy + dy[i];
-
-				if (sx < 0 || sx >= n || sy < 0 || sy >= n) {
+		while(!q.isEmpty()) {
+			Shark temp = q.poll();
+			for(int i=0;i<4;i++) {
+				int sx = temp.x + dx[i];
+				int sy = temp.y + dy[i];
+				if(sx < 0 || sx >= n || sy < 0 || sy >= n) {
 					continue;
 				}
-				if(map[sx][sy]!=0 && visited[sx][sy]==false){
-					if(map[sx][sy]<size){
-						eat++;
-					}
+				if(visited[sx][sy]) {
+					continue;
 				}
-				 qx.offer(sx);
-				 qy.offer(sy);
-				 visited[sx][sy]=true;
-				 cnt++;
-				 
-				
-
+				if(map[sx][sy]>temp.size) {
+					continue;
+				}
+				visited[sx][sy]=true;
+				if(map[sx][sy]<temp.size && map[sx][sy]!=0) {
+					preQ.offer(new Shark(sx,sy,temp.eat,temp.size,temp.dis+1));
+					continue;
+				}
+				q.offer(new Shark(sx,sy,temp.eat,temp.size,temp.dis+1));
 			}
-
 		}
-		flag = false;
-
+		if(preQ.size()==0) return;
+		Shark eatShark = preQ.poll();
+		int x=eatShark.x;
+		int y=eatShark.y;
+		map[x][y]=0;
+		cnt += eatShark.dis;
+		if(eatShark.size == eatShark.eat+1) {
+			detect(new Shark(x,y,0,eatShark.size+1,0));
+		}else {
+			detect(new Shark(x,y,eatShark.eat+1,eatShark.size,0));
+		}
+		return;		
 	}
-
-	// °Å¸®±¸ÇÏ´Â
-
-	// °Å¸® °°À¸¸é °¡Àå ³ôÀº°Å Áß¿¡ °¡Àå ¿ŞÂÊ
 
 }
-
-class Baby {
+class Shark implements Comparable<Shark>{
 	int x;
 	int y;
+	int eat;
 	int size;
-
-	Baby(int x, int y, int size) {
+	int dis;
+	Shark(int x,int y,int eat,int size, int dis){
 		this.x = x;
 		this.y = y;
+		this.eat = eat;
 		this.size = size;
+		this.dis = dis;
 	}
+	@Override
+	public int compareTo(Shark s) {
+		if(dis<s.dis) {
+			return -1;
+		}else if(dis==s.dis) {
+			
+			if(x<s.x) {
+				return -1;
+			}else if(x==s.x) {
+				if(y<s.y)
+					return -1;
+			}
+		}
+		return 1;
+	}
+	
+	
 }
