@@ -13,7 +13,7 @@ public class IntTriangle {
 				if(j==0) {
 					dp[i][j] = dp[i-1][j]+triangle[i][j];
 				}
-				else if(j==triangle[i].length-1) {
+				else if(j==i) {
 					dp[i][j] = dp[i-1][j-1]+triangle[i][j];
 				}else{					
 					dp[i][j]=Math.max(dp[i-1][j-1], dp[i-1][j])+triangle[i][j];
