@@ -26,6 +26,7 @@ public class Ex_16947 {
 		nodes = new Node[n+1];
 		visited = new boolean[n+1];
 		cycleNode = new boolean[n+1];
+		
 		for(int i=0;i<=n;i++) {
 			Node node = new Node(i);
 			nodes[i] = node;
