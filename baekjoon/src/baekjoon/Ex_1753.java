@@ -12,11 +12,11 @@ import java.util.StringTokenizer;
 
 public class Ex_1753 {
 
-	private static final int INF = 200_000_000;
+	private static final int INF = Integer.MAX_VALUE;
     static List<Point2> list[];
     static int dist[];
     static boolean check[];
-//    static int n, v;
+
 	public static void main(String[] args) throws Exception{
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,7 +26,7 @@ public class Ex_1753 {
 		int v = Integer.parseInt(st.nextToken());
 		int e = Integer.parseInt(st.nextToken());
 		
-		list = new ArrayList[v+1];
+		list = new ArrayList[v + 1];
 		dist = new int[v+1];
 		check = new boolean[v+1];
 		
@@ -41,8 +41,9 @@ public class Ex_1753 {
 			int startV = Integer.parseInt(st.nextToken());
 			int endV = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
+			//방향 그래프이므로 한쪽만 추가를 해줌
 			list[startV].add(new Point2(endV,w));
-//			list[endV].add(new Point2(startV,w));
+
 		}
 		dijkstra(k);
 		for(int i=1;i<list.length;i++) {
@@ -55,8 +56,6 @@ public class Ex_1753 {
 		
 	}
 	static void dijkstra(int start){
-//        Arrays.fill(dist, INF);
-//        Arrays.fill(check, false);
 
         PriorityQueue<Point2> queue = new PriorityQueue<>();
         queue.add(new Point2(start, 0));
@@ -65,22 +64,26 @@ public class Ex_1753 {
         while (!queue.isEmpty()){
             Point2 curPoint = queue.poll();
             int curNode = curPoint.end;
-//            int curWeight = curPoint.weight;
+
 
             if(check[curNode] == true) continue;
             check[curNode] = true;
 
             for(int i = 0; i < list[curNode].size(); i++){
                 Point2 nextNode = list[curNode].get(i);
-//                int nextWeight = list[curNode].get(i).weight;
-                //기존의 계산된 거리보다 새로운 거리가 작을 경우
+
+                //기존의 경로보다 새로운 경로가 작을 경우
                 if(dist[nextNode.end] > dist[curNode] + nextNode.weight){
                     dist[nextNode.end] = dist[curNode] + nextNode.weight;
                     queue.add(new Point2(nextNode.end, dist[nextNode.end]));
                 }
             }
+//            System.out.println("curNode="+curNode);
+//            for(int i=1;i<dist.length;i++) {
+//            	System.out.print(dist[i]+" ");
+//            }
         }
-//        return dist[end];
+
     }
 
 }
