@@ -44,7 +44,6 @@ public class Ex_13023 {
 	}
 	static void dfs(int num,int cnt,boolean[] visited) {
 		visited[num] = true;
-		System.out.println("num="+num+"cnt="+cnt);
 		if(cnt == 5) {
 			isExist = true;
 			return;
