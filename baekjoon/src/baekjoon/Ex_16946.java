@@ -89,11 +89,11 @@ public class Ex_16946 {
 	//그룹마다 몇개의 0이 포함되었는지를 리턴해줌
 	static int bfs(int x,int y,int groupCnt) {
 		int cnt=1;
-		Queue<Point> q = new LinkedList<>();
-		q.add(new Point(x,y));
+		Queue<Point3> q = new LinkedList<>();
+		q.add(new Point3(x,y));
 		group[x][y]=groupCnt;
 		while(!q.isEmpty()) {
-			Point point = q.poll(); 
+			Point3 point = q.poll(); 
 			int[] dx = {0,1,0,-1};
 			int[] dy = {1,0,-1,0};
 			for(int i=0;i<4;i++) {
@@ -106,7 +106,7 @@ public class Ex_16946 {
 				if(group[sx][sy]==0 && arr[sx][sy]==0) {
 					group[sx][sy]=groupCnt;
 					cnt++;
-					q.add(new Point(sx,sy));
+					q.add(new Point3(sx,sy));
 				}
 			}
 		}
@@ -115,11 +115,10 @@ public class Ex_16946 {
 	}
 
 }
-class Point{
+class Point3{
 	int x;
 	int y;
-	
-	Point(int x, int y){
+	Point3(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
