@@ -18,6 +18,7 @@ public class ex_11053 {
 			arr[i]=Integer.parseInt(st.nextToken());
 		}
 		int max=0;
+		
 		for(int i=0;i<n;i++){
 			dp[i]=1;
 			for(int j=0;j<i;j++){
@@ -27,6 +28,7 @@ public class ex_11053 {
 			}
 			if(max<dp[i]){
 				max = dp[i];
+				System.out.println(i);
 			}
 		}
 		System.out.println(max);
