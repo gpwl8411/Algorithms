@@ -1,3 +1,4 @@
+package programers;
 
 public class Greedy_JoyStick {
 
@@ -11,7 +12,7 @@ public class Greedy_JoyStick {
 	        int len = name.length();
 	        
 	        //최대로 가질 수 있는 min값은 끝까지 가는것
-	        int min_move = len-1;
+	        int minMove = len-1;
 	        
 	        for(int i=0; i<len; i++) {
 	        	answer += Math.min(name.charAt(i)-'A', 'Z'-name.charAt(i)+1);
@@ -22,10 +23,10 @@ public class Greedy_JoyStick {
 	        	while(next<len && name.charAt(next) == 'A')
 	        		next++;
 	        	
-	        	min_move = Math.min(min_move, i+len-next + i);
+	        	minMove = Math.min(minMove, i+len-next + i);
 	        }//for
 	        
-	        answer += min_move;
+	        answer += minMove;
 	        
 	        System.out.println(answer);
 	}
