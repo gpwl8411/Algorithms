@@ -22,7 +22,7 @@ public class Ex_2251 {
 			bucket[i] = Integer.parseInt(st.nextToken());
 		}
 		bfs();
-		for(int i=0;i<bucket[2];i++) {
+		for(int i=0;i<=bucket[2];i++) {
 			if(ans[i])
 				System.out.println(i);
 		}
