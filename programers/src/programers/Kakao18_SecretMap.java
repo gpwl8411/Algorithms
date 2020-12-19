@@ -25,7 +25,7 @@ public class Kakao18_SecretMap {
 			answer[i] = sb.toString();
 		}
 
-		
+		System.out.println(9 | 30);
 		
 	}
 	static String setBinary(int num,int n) {
