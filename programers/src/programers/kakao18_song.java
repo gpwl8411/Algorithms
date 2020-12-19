@@ -1,70 +1,83 @@
 package programers;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+
 
 public class kakao18_song {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String[] musicinfos = {"12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"};
-		String m = "ABCDE";
-		String answer="";
+		String[] musicinfos = {"12:00,12:06,HELLO,FFF"};
+		String m = "CDEFGAC";
+		String[] oldM = {"C#","D#","E#","F#","G#","A#"};
+		String[] newM = {"c","d","e","f","g","a"};
+		for(int i=0;i<oldM.length;i++) {
+			m = m.replace(oldM[i], newM[i]);
+		}
+		PriorityQueue<Song2> q = new PriorityQueue<>();
 		
-		String[] re = m.split("");
-		for(int i=0;i<re.length;i++){
-			if(re[i].equals("#")){
-				re[i]="";
-				re[i-1]=re[i].toLowerCase();
-			}
-		}
-		m = arrayToString(re,"");
-
-		int tempT=0;
-		for(int i=0;i<musicinfos.length;i++){
-			int h1 = Integer.parseInt(musicinfos[i].substring(0,2));
-			int m1 = Integer.parseInt(musicinfos[i].substring(3,5));
-			int h2 = Integer.parseInt(musicinfos[i].substring(6,8));
-			int m2 = Integer.parseInt(musicinfos[i].substring(9,11));
-
-			int time = (h2-h1)*60+m2-m1;
-			if(time >= m.length()){
-
-				String[] str = musicinfos[i].split(",");
-				String[] re2 = str[3].split("");
-				for(int j=0;j<re2.length;j++){
-					if(re2[j].equals("#")){
-						re2[j]="";
-						re2[j-1]=re2[j].toLowerCase();
-					}
+		for(int i=0;i<musicinfos.length;i++) {
+			String[] str = musicinfos[i].split(",");
+			String[] time = str[0].split(":");
+			
+			int startT = Integer.parseInt(time[0])*60+Integer.parseInt(time[1]);
+			time = str[1].split(":");
+			int finishT = Integer.parseInt(time[0])*60+Integer.parseInt(time[1]);
+			int playT = finishT-startT;
+			
+			
+			List<String> list = new ArrayList<>();
+			for(int j=0;j<str[3].length();j++) {
+				char c = str[3].charAt(j);
+				if(c=='#') {
+					String s = list.remove(list.size()-1);
+					list.add(s.toLowerCase());
 				}
-				str[3] = arrayToString(re2,"");
-				String repeated = new String(new char[time/str[3].length()+time%str[3].length()]).replace("\0", str[3]);
-				//System.out.println(repeated);
-				if(repeated.contains(m)){
-
-						if(tempT<time){
-							answer=str[2];
-							tempT=time;
-						}
-					
+				else {
+					list.add(c+"");
 				}
 			}
+
+			String music = String.join("", list);
+			int idx=0;
+			int size = list.size();
+			while(size<playT) {
+				music+=list.get(idx++%list.size());
+				size++;
+			}
+			if(size!=playT) {
+				music = String.join("", list.subList(0, playT));
+			}
+			if(music.contains(m) || m.contains(music))
+				q.add(new Song2(startT,playT,str[2]));
 		}
-		if(answer.equals("")){
-			answer="(None)";
-		}
-		System.out.println(answer);
+		
+		if(q.isEmpty())
+			System.out.println("\"(None)\"");
+		else
+			System.out.println(q.poll().name);
+		
 	}
-	public static String arrayToString(String[] array, String delimiter) {
-	    StringBuilder arTostr = new StringBuilder();
-	    if (array.length > 0) {
-	        arTostr.append(array[0]);
-	        for (int i=1; i<array.length; i++) {
-	            arTostr.append(delimiter);
-	            arTostr.append(array[i]);
-	        }
-	    }
-	    return arTostr.toString();
+}
+class Song2 implements Comparable<Song2>{
+	int startT;
+	int playT;
+	String name;
+	
+	Song2(int startT,int playT,String name){
+		this.startT = startT;
+		this.playT = playT;
+		this.name = name;		
 	}
 
+	@Override
+	public int compareTo(Song2 s) {
+		if(playT == s.playT) {
+			return startT - s.startT;
+		}
+		return s.playT - playT;
+	}
+	
 }
