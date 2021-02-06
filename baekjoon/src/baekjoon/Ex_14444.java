@@ -44,6 +44,10 @@ public class Ex_14444 {
 				r = i+a[i];
 				p = i;
 			}
+			for(int j=0;j<n;j++) {
+				System.out.print(a[j]+" ");
+			}
+			System.out.println("i=>"+i+":"+str.charAt(i)+",r="+r+"p="+p);
 		}
 	}
 
