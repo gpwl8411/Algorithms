@@ -14,44 +14,28 @@ public class Ex_20181 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
+		long k = Integer.parseInt(st.nextToken());
 
-		int[] arr = new int[n];
-		int[] dp = new int[n];
+		long[] arr = new long[n];
+		long[] dp = new long[n];
 		st = new StringTokenizer(br.readLine());
 
 		for (int i = 0; i < n; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
+			arr[i] = Long.parseLong(st.nextToken());
+			
 		}
-		int start = 0;
-		int end = 0;
-		int sum = 0;
+		long max=0;
+		long sum=0;
+        int end=-1;
+        for(int start=0;start<n;start++){
+            while(end+1<n && sum < k) sum+= arr[++end];
+            dp[end]=Math.max(dp[end],max+Math.max(0,sum-k));
+            sum -= arr[start];
+            max=Math.max(max,dp[start]);
+        }
+        System.out.println(max);
 
-		while (end < n) {
 
-			sum += arr[end];
-
-			if (sum >= k) {
-				if(start!=0) {					
-
-					dp[end] = Math.max(dp[end],Math.max(dp[start], dp[start-1]+sum-k));
-
-				}
-				else
-					dp[end] = sum-k;
-
-				sum -= arr[start];
-				sum -= arr[end];
-				start += 1;
-			} else {
-
-				end += 1;
-
-			}
-
-		}
-
-		System.out.println(dp[n - 1]);
 
 	}
 
