@@ -15,7 +15,7 @@ public class LongestPalindrome {
 				boolean flag=true;
 				
 				for(int k=0;k<i/2;k++) {//대칭되는거 같은지 확인
-					if(s.charAt(j+k)!=s.charAt(j + i  - k - 1)) {
+					if(s.charAt(k+j)!=s.charAt(j + i  - k - 1)) {
 						flag=false;
 						break;
 					}
