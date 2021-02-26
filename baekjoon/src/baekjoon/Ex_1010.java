@@ -21,15 +21,16 @@ public class Ex_1010 {
 		
 		for (int i = 0; i < 30; i++) {
 			dp[i][i] = 1;
-			dp[i][0] = 1;
+			dp[1][i] = i;
 		}
 		for(int i=2;i<30;i++) {
-			for(int j=1;j<30;j++) {
-				dp[i][j] = dp[i-1][j-1]+dp[i-1][j];
+			for(int j=2;j<30;j++) {
+				if(i!=j)
+					dp[i][j] = dp[i-1][j-1]+dp[i][j-1];
 			}
 		}
 		while(t-- > 0) {
-			long sum=1;
+			
 			st = new StringTokenizer(br.readLine());
 			int n = Integer.parseInt(st.nextToken());
 			int m = Integer.parseInt(st.nextToken());
