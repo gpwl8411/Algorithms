@@ -12,11 +12,6 @@ public class Ex_9655 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		
-//		if(n%2==0)
-//			System.out.println("CY");
-//		else
-//			System.out.println("SK");
-		
 		boolean[] dp = new boolean[n+1];
 		dp[0]=false;
 		for(int i=1;i<=n;i++) {
