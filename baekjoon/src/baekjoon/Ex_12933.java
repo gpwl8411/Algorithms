@@ -39,7 +39,6 @@ public class Ex_12933 {
 				System.out.println(-1);
 				return;
 			}
-				
 		}
 		System.out.println(map.get(5));
 		
