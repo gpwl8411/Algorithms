@@ -51,7 +51,6 @@ public class Ex_2573 {
 			copy();
 			time++;
 			cnt = 0;
-			print();
 			if (checkQ.isEmpty()) {
 				flag = -1;
 				break;
@@ -59,7 +58,7 @@ public class Ex_2573 {
 			while (!checkQ.isEmpty()) {
 				Pair4 p = checkQ.poll();
 				searchQ.add(p);
-				if(!visited[p.x][p.y]) {
+				if (!visited[p.x][p.y]) {
 					check(p);
 					cnt++;
 				}
@@ -94,17 +93,10 @@ public class Ex_2573 {
 
 	static void check(Pair4 p) {
 
-//		if (visited[p.x][p.y])
-//			return 0;
-
-//		int cnt = 0;
 		int[] dx = { 0, 1, 0, -1 };
 		int[] dy = { 1, 0, -1, 0 };
-//		boolean[][] visited = new boolean[r][c];
 		Queue<Pair4> q = new LinkedList<>();
 		q.add(p);
-//		while (!checkQ.isEmpty()) {
-//			q.add(checkQ.poll());
 		while (!q.isEmpty()) {
 			Pair4 curP = q.poll();
 			visited[curP.x][curP.y] = true;
@@ -119,19 +111,12 @@ public class Ex_2573 {
 					continue;
 				}
 				if (map[sx][sy] != 0) {
+					visited[sx][sy] = true;
 					q.add(new Pair4(sx, sy));
 				}
 
 			}
 		}
-//			}
-//			cnt++;
-//			if (cnt >= 2)
-//				return 1;
-//		}
-//
-//		checkQ.clear();
-//		return 0;
 
 	}
 
@@ -141,14 +126,6 @@ public class Ex_2573 {
 		}
 	}
 
-	static void print() {
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-				System.out.print(map[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
 }
 
 class Pair4 {
@@ -160,32 +137,4 @@ class Pair4 {
 		this.y = y;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) {
-			return false;
-		}
-		if (o == this) {
-			return true;
-		}
-		if (getClass() != o.getClass()) {
-			return false;
-		}
-
-		Pair4 p = (Pair4) o;
-		return (this.x == p.x && this.y == p.y);
-
-	}
-
-	@Override
-	public int hashCode() {
-
-		final int prime = 31;
-		int hashCode = 1;
-
-		hashCode = prime * hashCode + x * 10;
-		hashCode += prime * hashCode + y;
-
-		return hashCode;
-	}
 }
