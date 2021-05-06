@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+//크루스칼
 public class Ex_1922 {
 
 	static int[] root;
@@ -92,7 +93,7 @@ public class Ex_1922 {
 	}
 
 }
-/*
+/* - 프림
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
