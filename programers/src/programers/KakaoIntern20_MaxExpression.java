@@ -9,7 +9,7 @@ public class KakaoIntern20_MaxExpression {
 
 	static char[] output= new char[3];
 	static List<String> list;
-	static int ans = 0;
+	static long ans = 0;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//카카오20 인턴십 수식 최대화
@@ -55,14 +55,14 @@ public class KakaoIntern20_MaxExpression {
 			q.add(s);
 		}
 		
-		int num=-1;
+		long num=-1;
 		for(int i=0;i<output.length;i++) {
 			String op = output[i]+"";
 			num=-1;
 			while(!q.isEmpty()) {
 				String s = q.poll();
 				if(s.equals(op)) {
-					int curNum = Integer.parseInt(q.poll());
+					long curNum = Long.parseLong(q.poll());
 					num = calc(num,curNum,output[i]);
 					if(q.isEmpty())
 						tmpQ.add(String.valueOf(num));
@@ -75,7 +75,7 @@ public class KakaoIntern20_MaxExpression {
 					}
 				}else {
 					if(num==-1)
-						num=Integer.parseInt(s);
+						num=Long.parseLong(s);
 					if(q.isEmpty())
 						tmpQ.add(s);
 				}
@@ -88,8 +88,8 @@ public class KakaoIntern20_MaxExpression {
 		}
 		ans = Math.max(ans, Math.abs(num));
 	}
-	static int calc(int n1, int n2, char op) {
-		int res=0;
+	static long calc(long n1, long n2, char op) {
+		long res=0;
 		switch(op) {
 		case '+' :
 			res = n1+n2;
