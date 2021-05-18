@@ -3,61 +3,73 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Ex_2887 {
 
 	static int[] root;
-	static List<Planet> list;
+	static Planet[] planet;
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
-		// 최소 스패닝 트리 - 물대기
+		// 최소 스패닝 트리 - 행성 터널
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		int n = Integer.parseInt(br.readLine());
-		int[][] dist = new int[n + 1][3];
-		list = new ArrayList<Planet>();
-		root = new int[n + 1];
-		for (int i = 1; i <= n; i++)
+		planet = new Planet[n];
+		root = new int[n];
+		for (int i = 0; i < n; i++)
 			root[i] = i;
-
-		for (int i = 1; i <= n; i++) {
+		
+		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			int z = Integer.parseInt(st.nextToken());
-			dist[i][0] = x;
-			dist[i][1] = y;
-			dist[i][2] = z;
+			planet[i] = new Planet(i, x, y, z);
 		}
-		for (int i = 1; i <= n; i++) {
-			for (int j = i+1; j <= n; j++) {
-				int val = Math.min(Math.abs(dist[i][0] - dist[j][0]),
-						Math.min(Math.abs(dist[i][1] - dist[j][1]), Math.abs(dist[i][2] - dist[j][2])));
-				list.add(new Planet(i, j, val));
 
-			}
+		ArrayList<Edge> edges = new ArrayList<>();
+
+		// X 좌표 정렬
+		Arrays.sort(planet, (p1, p2) -> p1.x - p2.x);
+		for (int i = 0; i < n-1 ; i++) {
+			int cost = Math.abs(planet[i].x - planet[i + 1].x);
+
+			edges.add(new Edge(planet[i].idx, planet[i + 1].idx, cost));
 		}
-		Collections.sort(list);
+		// Y
+		Arrays.sort(planet, (p1, p2) -> p1.y - p2.y);
+		for (int i = 0; i < n-1; i++) {
+			int cost = Math.abs(planet[i].y - planet[i + 1].y);
 
-		int cnt = 0;
-		long result = 0;
-		while (cnt < list.size()) {
-			int start = list.get(cnt).start;
-			int end = list.get(cnt).end;
-			int res = find(start, end);
-			if (res == 1) {
-				cnt++;
+			edges.add(new Edge(planet[i].idx, planet[i + 1].idx, cost));
+		}
+		// Z
+		Arrays.sort(planet, (p1, p2) -> p1.z - p2.z);
+		for (int i = 0; i < n-1 ; i++) {
+			int cost = Math.abs(planet[i].z - planet[i + 1].z);
+
+			edges.add(new Edge(planet[i].idx, planet[i + 1].idx, cost));
+		}
+		Collections.sort(edges);
+		
+		int result = 0;
+		for(int i=0;i<edges.size();i++) {
+
+			Edge edge = edges.get(i);
+			int res = find(edge.start,edge.end);
+			if(res==1) {
 				continue;
 			}
-			make_union(start, end);
-			result += list.get(cnt).val;
-			cnt++;
+				
+			make_union(edge.start,edge.end);
+			result += edge.cost;
 		}
+
 		System.out.println(result);
 	}
 
@@ -89,19 +101,36 @@ public class Ex_2887 {
 
 }
 
-class Planet implements Comparable<Planet> {
-	int start;
-	int end;
-	int val;
+class Edge implements Comparable<Edge> {
 
-	Planet(int start, int end, int val) {
+	int start, end;
+	int cost;
+
+	Edge(int start, int end, int cost) {
+
 		this.start = start;
 		this.end = end;
-		this.val = val;
+		this.cost = cost;
 	}
 
 	@Override
-	public int compareTo(Planet o) {
-		return Integer.compare(this.val, o.val);
+	public int compareTo(Edge o) {
+
+		return cost-o.cost;
 	}
+}
+
+class Planet {
+	int idx;
+	int x;
+	int y;
+	int z;
+
+	Planet(int idx, int x, int y, int z) {
+		this.idx = idx;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+
 }
