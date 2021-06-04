@@ -56,8 +56,6 @@ public class Ex_14503 {
 				r=sx;
 				c=sy;
 				d=(d+i)%4;
-//				back.push(d);
-//				System.out.println(d);
 				flag = false;
 				cnt++;
 				map[r][c]=2;
