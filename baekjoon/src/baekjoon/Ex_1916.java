@@ -12,6 +12,7 @@ public class Ex_1916 {
     static boolean[] visited;
 
     public static void main(String[] args) throws Exception {
+    	//최소비용 구하기 - 다익스트라
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
